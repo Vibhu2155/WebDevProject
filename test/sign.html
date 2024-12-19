@@ -1,0 +1,192 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <style>
+        body {
+            font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #d2fdfe;
+            background-image: url("1.jpg");
+            background-size: cover;
+        }
+        .container {
+           
+            display: flex;
+            flex-direction: column;
+
+            justify-content: top;
+            height: 60vh;
+            width: 50%;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.5);
+            
+        }
+        h2 {
+            border-radius: 15px;
+             align-items:center ;
+            width: 25%;
+            margin-left: 35%;
+            background-color: #39cccc;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 50px;
+            color: #ffffff;
+            padding: 10px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 25px;
+        }
+        input {
+            width: 98%;
+            padding: 10px;
+            border: 1px solid #39cccc;
+            border-radius: 4px;
+            font-size: 25px;
+        }
+        .error-message {
+            color: red;
+            font-size: 20px;
+            display: none;
+            margin-top: 5px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #39cccc;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 25px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        footer {
+            background-color: #39cccc;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Sign Up</h2>
+        <form id="registrationForm">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter your name">
+                <div class="error-message"></div>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email">
+                <div class="error-message"></div>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password">
+                <div class="error-message"></div>
+            </div>
+            <div class="form-group">
+                <label for="dob">Date of Birth</label>
+                <input type="date" id="dob" name="dob">
+                <div class="error-message"></div>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+      
+        document.getElementById("registrationForm").addEventListener("submit", function (e) {
+            e.preventDefault(); 
+
+            
+            const errorMessages = document.querySelectorAll(".error-message");
+            errorMessages.forEach((message) => {
+                message.style.display = "none";
+            });
+
+            let isValid = true;
+
+            
+            const nameInput = document.getElementById("name");
+            const nameValue = nameInput.value.trim();
+            const nameRegex = /^[a-zA-Z0-9]+$/; 
+            if (nameValue === "" || nameValue.length < 3 || nameRegex.test(nameValue) === false) {
+                showError(nameInput, "Name must be at least 3 alphanumeric characters");
+                isValid = false;
+            }
+
+            
+            const emailInput = document.getElementById("email");
+            const emailValue = emailInput.value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (emailRegex.test(emailValue) === false) {
+                showError(emailInput, "Invalid email address");
+                isValid = false;
+            }
+
+            
+            const passwordInput = document.getElementById("password");
+            const passwordValue = passwordInput.value.trim();
+            if (passwordValue.length < 6) {
+                showError(passwordInput, "Password must be at least 6 characters long");
+                isValid = false;
+            }
+
+            
+            const dobInput = document.getElementById("dob");
+            const dobValue = dobInput.value;
+            if (dobValue === "") {
+                showError(dobInput, "Date of birth is required");
+                isValid = false;
+            } else {
+                const dobDate = new Date(dobValue);
+                const today = new Date();
+                if (dobDate >= today) {
+                    showError(dobInput, "Date of birth must be in the past");
+                    isValid = false;
+                }
+            }
+
+            
+            if (isValid === true) {
+                alert("Form submitted successfully!");
+                
+            }
+        });
+
+        // 
+        function showError(input, message) {
+            const formGroup = input.parentElement;
+            const errorMessage = formGroup.querySelector(".error-message");
+            errorMessage.innerText = message;
+            errorMessage.style.display = "block";
+        }
+    </script>
+    <footer>
+        <p>&copy; 2024 LernTern. All rights reserved.</p>
+    </footer>
+</body>
+</html>
